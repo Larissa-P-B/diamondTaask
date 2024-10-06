@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Tarefa</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000; /* Fundo preto */
+            color: #00FF00; /* Verde neon */
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        h1 {
+            text-shadow: 0 0 5px #FF00FF, 0 0 10px #FF00FF; /* Efeito de brilho no texto */
+        }
+
+        .bg-white {
+            background-color: rgba(255, 255, 255, 0.1); /* Fundo semi-transparente para o formulário */
+        }
+
+        button {
+            background-color: #00FFFF; /* Azul neon */
+            color: #000; /* Texto preto */
+            padding: 10px; /* Padding ajustado para o botão */
+            border-radius: 5px; /* Bordas arredondadas */
+            transition: all 0.3s; /* Transição suave ao passar o mouse */
+            text-shadow: 1px 1px 2px black; /* Sombra no texto */
+            width: 100%; /* Largura total do botão */
+        }
+
+        button:hover {
+            background-color: rgba(0, 255, 255, 0.8); /* Efeito de fundo ao passar o mouse */
+            transform: scale(1.05); /* Aumenta um pouco o botão ao passar o mouse */
+        }
+
+        footer {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+<main class="p-6 flex-grow flex items-center justify-center">
+    <div class="w-96">
+        <h1 class="text-2xl text-center mb-6">Criar Tarefa</h1>
+        <form action="/task" th:object="${taskRequest}" method="post" class="bg-white p-6 rounded shadow-md">
+            <div class="mb-4">
+                <label for="titulo" class="block mb-1">Título:</label>
+                <input
+                        type="text"
+                        id="titulo"
+                        th:field="*{titulo}"
+                        th:classappend="${#fields.hasErrors('titulo')} ? 'is-danger'"
+                        required
+                        class="border border-gray-300 p-2 rounded w-full">
+            </div>
+            <p class="help is-danger" th:errors="*{titulo}"></p>
+            <div class="mb-4">
+                <label for="descricao" class="block mb-1">Descrição:</label>
+                <textarea id="descricao"
+                          required
+                          class="border border-gray-300 p-2 rounded w-full"
+                          th:classappend="${#fields.hasErrors('descricao')} ? 'is-danger'"
+                          th:field="*{descricao}"></textarea>
+            </div>
+            <p class="help is-danger" th:errors="*{descricao}"></p>
+            <div class="mb-4">
+                <label for="data" class="block mb-1">Data de Entrega:</label>
+                <input type="datetime-local"
+                       id="data"
+                       th:field="*{data}"
+                       th:classappend="${#fields.hasErrors('data')} ? 'is-danger'"
+                       required
+                       class="border border-gray-300 p-2 rounded w-full">
+            </div>
+            <p class="help is-danger" th:errors="*{data}"></p>
+            <div class="mb-4">
+                <button type="submit">Criar Tarefa</button>
+            </div>
+        </form>
+        <div class="flex justify-center mt-4">
+            <a href="/" class="text-center text-blue-600 hover:underline">Voltar </a>
+        </div>
+    </div>
+</main>
+<footer class="p-4 text-center">
+    <p>&copy; 2024 DiamondTask. Todos os direitos reservados.</p>
+</footer>
+</body>
+</html>
